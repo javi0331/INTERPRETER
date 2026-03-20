@@ -127,45 +127,41 @@ java -cp bin Main
 ## 📐 Diagrama UML
 ```mermaid
 classDiagram
-    class Expression {
-        <>
-        +interpret(Context) boolean
-    }
-    
-    class Context {
-        -String text
-        +Context(text)
-        +getText() String
-        +contains(keyword) boolean
-    }
-    
-    class TerminalExpression {
-        -String keyword
-        +TerminalExpression(keyword)
-        +interpret(Context) boolean
-    }
-    
-    class AndExpression {
-        -Expression leftExpression
-        -Expression rightExpression
-        +AndExpression(left, right)
-        +interpret(Context) boolean
-    }
-    
-    class OrExpression {
-        -Expression leftExpression
-        -Expression rightExpression
-        +OrExpression(left, right)
-        +interpret(Context) boolean
-    }
-    
-    class NotExpression {
-        -Expression expression
-        +NotExpression(expression)
-        +interpret(Context) boolean
-    }
-    
-    Expression  Context : uses
+class Expression {
+<<interface>>
++interpret(Context) boolean
+}class Context {
+    -String text
+    +Context(text)
+    +getText() String
+    +contains(keyword) boolean
+}class TerminalExpression {
+    -String keyword
+    +TerminalExpression(keyword)
+    +interpret(Context) boolean
+}class AndExpression {
+    -Expression leftExpression
+    -Expression rightExpression
+    +AndExpression(left, right)
+    +interpret(Context) boolean
+}class OrExpression {
+    -Expression leftExpression
+    -Expression rightExpression
+    +OrExpression(left, right)
+    +interpret(Context) boolean
+}class NotExpression {
+    -Expression expression
+    +NotExpression(expression)
+    +interpret(Context) boolean
+}Expression <|.. TerminalExpression : implements
+Expression <|.. AndExpression : implements
+Expression <|.. OrExpression : implements
+Expression <|.. NotExpression : implementsAndExpression "1" *-- "2" Expression : contains
+OrExpression "1" *-- "2" Expression : contains
+NotExpression "1" *-- "1" Expression : containsTerminalExpression ..> Context : uses
+AndExpression ..> Context : uses
+OrExpression ..> Context : uses
+NotExpression ..> Context : uses
 ```
 
 ## 🎓 Conceptos Clave
